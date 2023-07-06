@@ -1,0 +1,25 @@
+-- SPUFI CREATE STOGROUP    
+   CREATE STOGROUP VILANSG  
+     VOLUMES (ZVOL00)       
+     VCAT VILANOVA;         
+                            
+-- SPUFI CREATE DATABASE    
+   CREATE DATABASE VILANDB  
+     BUFFERPOOL BP2         
+     CCSID UNICODE          
+     STOGROUP VILANSG;      
+                            
+-- SPUFI CREATE TABLESPACE  
+   CREATE TABLESPACE DATOSTS
+     IN VILANDB             
+     USING STOGROUP VILANSG 
+     PRIQTY 250             
+     SECQTY 100             
+     ERASE NO               
+     FREEPAGE 10            
+     PCTFREE 10             
+     BUFFERPOOL BP2         
+     COMPRESS NO            
+     LOCKSIZE ANY           
+     LOCKMAX SYSTEM         
+     CLOSE YES;             

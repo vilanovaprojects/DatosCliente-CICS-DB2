@@ -1,0 +1,53 @@
+-- SPUFI CREATE TABLE                                                   
+     CREATE TABLE USRDATOS                                              
+        (                                                               
+          CIF              CHAR(9)   NOT NULL                           
+        , NOMBRE           CHAR(20)  NOT NULL                           
+        , DIRECCION        CHAR(35)  NOT NULL                           
+        , TLF              CHAR(9)   NOT NULL                           
+        , CORREO           CHAR(20)  NOT NULL                           
+                                                                        
+        , PRIMARY KEY (CIF)                                             
+        )                                                               
+                                                                        
+        IN VILANDB.DATOSTS;                                             
+                                                                        
+                                                                        
+      CREATE UNIQUE INDEX USRDATOS_IPK ON USRDATOS                      
+        (                                                               
+          CIF                                                           
+        )                                                               
+         CLUSTER CLOSE NO                                               
+         USING STOGROUP VILANSG                                         
+         BUFFERPOOL BP2;                                                
+                                                                        
+-- SPUFI SEED USRDATOS TABLE                                            
+                                                                        
+   INSERT INTO IBMUSER.USRDATOS                                         
+      (                                                                 
+        CIF, NOMBRE, DIRECCION, TLF, CORREO                             
+      )                                                                 
+      VALUES                                                            
+      (                                                                 
+        '000000000', 'REG-0', 'REG-0', 'REG-0', 'REG-0'                 
+      );                                                                
+                                                                        
+   INSERT INTO IBMUSER.USRDATOS                                         
+      (                                                                 
+        CIF, NOMBRE, DIRECCION, TLF, CORREO                             
+      )                                                                 
+      VALUES                                                            
+      (                                                                 
+        '000000001', 'INDITEX', 'CALLE ARTEIXO S/N'                     
+        , '999666999', 'INDITEX@INDITEX.ES'                             
+      );                                                                
+                                                                        
+   INSERT INTO IBMUSER.USRDATOS                                         
+      (                                                                 
+        CIF, NOMBRE, DIRECCION, TLF, CORREO                             
+      )                                                                 
+      VALUES                                                            
+      (                                                                 
+        '000000002', 'AMAZON', 'EN ALGUN LUGAR DE SEATTLE S/N'          
+        , '333555222', 'AMAZON@AMAZON.COM'                              
+      );                                                                

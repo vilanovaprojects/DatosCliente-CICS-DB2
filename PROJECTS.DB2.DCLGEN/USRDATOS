@@ -1,0 +1,36 @@
+      ******************************************************************
+      * DCLGEN TABLE(USRDATOS)                                         *
+      *        LIBRARY(PROJECTS.DB2.DCLGEN(USRDATOS))                  *
+      *        ACTION(REPLACE)                                         *
+      *        LANGUAGE(COBOL)                                         *
+      *        NAMES(DC-)                                              *
+      *        STRUCTURE(DC-USRDATOS)                                  *
+      *        QUOTE                                                   *
+      *        DBCSDELIM(NO)                                           *
+      *        COLSUFFIX(YES)                                          *
+      * ... IS THE DCLGEN COMMAND THAT MADE THE FOLLOWING STATEMENTS   *
+      ******************************************************************
+           EXEC SQL DECLARE USRDATOS TABLE                              
+           ( CIF                            CHAR(9) NOT NULL,           
+             NOMBRE                         CHAR(20) NOT NULL,          
+             DIRECCION                      CHAR(35) NOT NULL,          
+             TLF                            CHAR(9) NOT NULL,           
+             CORREO                         CHAR(20) NOT NULL           
+           ) END-EXEC.                                                  
+      ******************************************************************
+      * COBOL DECLARATION FOR TABLE USRDATOS                           *
+      ******************************************************************
+       01  DC-USRDATOS.                                                 
+      *                       CIF                                       
+           10 DC-CIF               PIC X(9).                            
+      *                       NOMBRE                                    
+           10 DC-NOMBRE            PIC X(20).                           
+      *                       DIRECCION                                 
+           10 DC-DIRECCION         PIC X(35).                           
+      *                       TLF                                       
+           10 DC-TLF               PIC X(9).                            
+      *                       CORREO                                    
+           10 DC-CORREO            PIC X(20).                           
+      ******************************************************************
+      * THE NUMBER OF COLUMNS DESCRIBED BY THIS DECLARATION IS 5       *
+      ******************************************************************

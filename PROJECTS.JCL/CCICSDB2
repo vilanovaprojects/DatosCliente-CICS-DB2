@@ -1,0 +1,117 @@
+//CCICSDB2 JOB MALSOF,'COMP-CICS-DB2',NOTIFY=&SYSUID,                   
+//            MSGCLASS=A,CLASS=A,MSGLEVEL=(1,1),REGION=0M               
+//*================================================================     
+//* PLEASE, SET YOU PARAMETER 'PGM'                                     
+//*================================================================     
+//SETP    SET PGM=DATOS                                                 
+//*----------------------------------------------------------------     
+//*                                                                     
+//*       DB2 PRECOMPILER                                               
+//*----------------------------------------------------------------     
+//DB2      EXEC PGM=DSNHPC,                                             
+//         PARM='HOST(IBMCOB),XREF,SOURCE,FLAG(W),APOST',               
+//         REGION=0M                                                    
+//*                                                                     
+//STEPLIB  DD  DISP=SHR,DSN=DSN610.SDSNEXIT                             
+//         DD  DISP=SHR,DSN=DSN610.SDSNLOAD                             
+//SYSIN    DD  DSN=PROJECTS.COBOL(&PGM),DISP=SHR                        
+//DBRMLIB  DD  DSN=PROJECTS.DB2.DBRMLIB(&PGM),DISP=SHR                  
+//SYSCIN   DD  DSN=PROJECTS.DB2.DSNHOUT(&PGM),DISP=SHR                  
+//SYSLIB   DD  DSN=PROJECTS.COPYS,DISP=SHR                              
+//         DD  DSN=PROJECTS.DB2.DCLGEN,DISP=SHR                         
+//         DD  DSN=PROJECTS.COBOL,DISP=SHR                              
+//         DD  DSN=CICSTS13.CICS.SDFHCOB,DISP=SHR                       
+//SYSPRINT DD  SYSOUT=A                                                 
+//SYSTERM  DD  SYSOUT=A                                                 
+//SYSUT1   DD  SPACE=(CYL,(5,1)),UNIT=SYSDA                             
+//SYSUT2   DD  SPACE=(CYL,(5,1)),UNIT=SYSDA                             
+//*                                                                     
+//*       CICS TRANSLATOR                                               
+//*----------------------------------------------------------------     
+//CICS    EXEC PGM=DFHECP1$,REGION=0M,                                  
+//        PARM=(COBOL3,NOSOURCE,SP),                                    
+//        COND=(0,NE,DB2)                                               
+//*                                                                     
+//STEPLIB  DD  DISP=SHR,DSN=CICSTS13.CICS.SDFHLOAD                      
+//DSCTLIB  DD  DISP=SHR,DSN=CICSTS13.CICS.SDFHCOB                       
+//SYSIN    DD  DSN=PROJECTS.DB2.DSNHOUT(&PGM),DISP=SHR                  
+//SYSPUNCH DD  DISP=(NEW,PASS),DSN=&&CICSOUT0,UNIT=SYSDA,               
+//             SPACE=(800,(500,500)),DCB=BLKSIZE=400                    
+//SYSPRINT DD  SYSOUT=A                                                 
+//SYSOUT   DD  SYSOUT=A                                                 
+//*                                                                     
+//*       COBOL COMPILER                                                
+//*----------------------------------------------------------------     
+//COB    EXEC PGM=IGYCRCTL,REGION=0M,                                   
+//       PARM=(APOST,LIB,XREF,MAP,RENT,BUF(32760),DYNAM,                
+//       SSRANGE,OFFSET,TRUNC(OPT)),                                    
+//       COND=((0,NE,DB2),(0,NE,CICS))                                  
+//*                                                                     
+//STEPLIB  DD DSN=IGY210.SIGYCOMP,DISP=SHR                              
+//SYSLIB   DD DSN=CICSTS13.CICS.SDFHCOB,DISP=SHR                        
+//*                                                                     
+//         DD DSN=PROJECTS.COBOL,DISP=SHR                               
+//         DD DSN=PROJECTS.COPYS,DISP=SHR                               
+//         DD DSN=PROJECTS.CICS.MAPS,DISP=SHR                           
+//         DD DSN=PROJECTS.DB2.DCLGEN,DISP=SHR                          
+//SYSPRINT DD SYSOUT=A                                                  
+//SYSIN    DD DSN=&&CICSOUT0,DISP=(OLD,DELETE)                          
+//SYSLIN   DD DSN=&&LOADSET,DISP=(NEW,PASS),UNIT=SYSDA,                 
+//            SPACE=(800,(500,500))                                     
+//SYSUT1   DD UNIT=SYSDA,SPACE=(460,(350,100))                          
+//SYSUT2   DD UNIT=SYSDA,SPACE=(460,(350,100))                          
+//SYSUT3   DD UNIT=SYSDA,SPACE=(460,(350,100))                          
+//SYSUT4   DD UNIT=SYSDA,SPACE=(460,(350,100))                          
+//SYSUT5   DD UNIT=SYSDA,SPACE=(460,(350,100))                          
+//SYSUT6   DD UNIT=SYSDA,SPACE=(460,(350,100))                          
+//SYSUT7   DD UNIT=SYSDA,SPACE=(460,(350,100))                          
+//*                                                                     
+//*      COPYLINK                                                       
+//*----------------------------------------------------------------     
+//CPLK     EXEC PGM=IEBGENER,REGION=0M,                                 
+//       COND=((0,NE,DB2),(0,NE,CICS),(0,NE,COB))                       
+//*                                                                     
+//SYSUT1   DD DSN=PROJECTS.JCL(DFHEILID),DISP=SHR                       
+//SYSUT2   DD DSN=&&COPYLINK,DISP=(NEW,PASS),                           
+//            DCB=(LRECL=80,BLKSIZE=400,RECFM=FB),                      
+//            UNIT=SYSDA,SPACE=(400,(20,20))                            
+//SYSPRINT DD SYSOUT=A                                                  
+//SYSIN    DD DUMMY                                                     
+//*                                                                     
+//*     LINK EDITION                                                    
+//*----------------------------------------------------------------     
+//LKED   EXEC PGM=IEWL,REGION=0M,                                       
+//            PARM='LIST,XREF,CALL,AMODE=31,RMODE=ANY',                 
+//       COND=((0,NE,DB2),(0,NE,CICS),(0,NE,COB),(0,NE,CPLK))           
+//*                                                                     
+//SYSLIB   DD  DSN=CICSTS13.CICS.SDFHLOAD,DISP=SHR                      
+//         DD  DSN=CEE.SCEELKED,DISP=SHR                                
+//         DD  DSN=DSN610.SDSNEXIT,DISP=SHR                             
+//         DD  DSN=DSN610.SDSNLOAD,DISP=SHR                             
+//*        DD  DSN=CEE.SCEERUN,DISP=SHR                                 
+//*        DD  DSN=SYS1.LINKLIB,DISP=SHR                                
+//         DD  DSN=TCPIP.SEZATCP,DISP=SHR                               
+//         DD  DISP=SHR,DSN=ISP.SISPLOAD                                
+//         DD  DISP=SHR,DSN=GDDM.SADMMOD                                
+//SYSLIN   DD  DSN=&&COPYLINK,DISP=(OLD,DELETE)                         
+//         DD  DSN=&&LOADSET,DISP=(OLD,DELETE)                          
+//         DD  DDNAME=SYSIN                                             
+//SYSLMOD  DD DSN=PROJECTS.CICS.LOAD(&PGM),DISP=SHR                     
+//SYSUT1   DD UNIT=SYSDA,DCB=BLKSIZE=1024,                              
+//            SPACE=(1024,(200,20))                                     
+//SYSPRINT DD SYSOUT=A                                                  
+//*                                                                     
+//*        DB2 BIND PLAN                                                
+//*                                                                     
+//BINDPL   EXEC PGM=IKJEFT01,REGION=0M,                                 
+//   COND=((0,NE,DB2),(0,NE,CICS),(0,NE,COB),(0,NE,CPLK),               
+//        (0,NE,LKED))                                                  
+//*                                                                     
+//STEPLIB  DD  DISP=SHR,DSN=DSN610.SDSNLOAD                             
+//         DD  DISP=SHR,DSN=DSN610.SDSNEXIT                             
+//DBRMLIB  DD  DISP=SHR,DSN=PROJECTS.DB2.DBRMLIB(&PGM)                  
+//SYSPRINT DD  SYSOUT=A                                                 
+//SYSTSPRT DD  SYSOUT=A                                                 
+//SYSTSPRT DD  SYSOUT=A                                                 
+//SYSTSIN  DD  DSN=PROJECTS.DB2.BIND(&PGM),DISP=SHR                     
+//*                                                                     

@@ -1,0 +1,10 @@
+DSN     SYSTEM     (DSN1)      
+BIND    PLAN       (DATOSPL) - 
+        MEMBER     (DATOS) -   
+        ACTION     (REPLACE) - 
+        ISOLATION  (CS) -      
+        VALIDATE   (BIND) -    
+        RELEASE    (COMMIT) -  
+        OWNER      (IBMUSER) - 
+        QUALIFIER  (IBMUSER)   
+END                            
