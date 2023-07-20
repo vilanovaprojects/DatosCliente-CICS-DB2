@@ -1,0 +1,26 @@
+MENU00   DFHMSD TYPE=DSECT,MODE=INOUT,TERM=ALL,STORAGE=AUTO,LANG=COBOL
+*                              
+MAP0     DFHMDI SIZE=(24,80),LINE=1,COLUMN=1,COLOR=GREEN,HILIGHT=OFF,  X
+               MAPATTS=(COLOR,HILIGHT),DSATTS=HILIGHT,CTRL=FREEKB
+         DFHMDF POS=(01,65),LENGTH=15,ATTRB=(PROT,NORM),COLOR=BLUE,    X
+               INITIAL='VER: 08/07/2023'                                
+         DFHMDF POS=(02,04),LENGTH=14,ATTRB=(PROT,NORM),COLOR=RED,     X
+               INITIAL='VILANOVA S.L.U'                                 
+         DFHMDF POS=(06,23),LENGTH=22,ATTRB=(PROT,NORM),COLOR=GREEN,   X
+               INITIAL='SELECCIONA UNA OPCION:'                         
+         DFHMDF POS=(09,23),LENGTH=27,ATTRB=(PROT,NORM),COLOR=GREEN,   X
+               INITIAL='1-INTRODUCIR NUEVO REGISTRO'                    
+         DFHMDF POS=(11,23),LENGTH=17,ATTRB=(PROT,NORM),COLOR=GREEN,   X
+               INITIAL='2-BUSCAR REGISTRO'                              
+         DFHMDF POS=(13,23),LENGTH=18,ATTRB=(PROT,NORM),COLOR=GREEN,   X
+               INITIAL='3-LISTAR REGISTROS'                             
+         DFHMDF POS=(15,23),LENGTH=07,ATTRB=(PROT,NORM),COLOR=GREEN,   X
+               INITIAL='OPCION:'                 
+OPC      DFHMDF POS=(15,31),LENGTH=01,ATTRB=(UNPROT,FSET,IC),          X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+         DFHMDF POS=(15,33),LENGTH=00,ATTRB=(ASKIP)                    
+ERRMSG   DFHMDF POS=(23,01),LENGTH=60,ATTRB=(PROT,BRT),COLOR=NEUTRAL    
+         DFHMDF POS=(24,01),LENGTH=20,ATTRB=(PROT,NORM),COLOR=BLUE,    X
+               INITIAL='F3=SALIR'                                       
+         DFHMSD TYPE=FINAL                                              
+         END                                                            

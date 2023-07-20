@@ -21,33 +21,3 @@
          USING STOGROUP VILANSG                                         
          BUFFERPOOL BP2;                                                
                                                                         
--- SPUFI SEED USRDATOS TABLE                                            
-                                                                        
-   INSERT INTO IBMUSER.USRDATOS                                         
-      (                                                                 
-        CIF, NOMBRE, DIRECCION, TLF, CORREO                             
-      )                                                                 
-      VALUES                                                            
-      (                                                                 
-        '000000000', 'REG-0', 'REG-0', 'REG-0', 'REG-0'                 
-      );                                                                
-                                                                        
-   INSERT INTO IBMUSER.USRDATOS                                         
-      (                                                                 
-        CIF, NOMBRE, DIRECCION, TLF, CORREO                             
-      )                                                                 
-      VALUES                                                            
-      (                                                                 
-        '000000001', 'INDITEX', 'CALLE ARTEIXO S/N'                     
-        , '999666999', 'INDITEX@INDITEX.ES'                             
-      );                                                                
-                                                                        
-   INSERT INTO IBMUSER.USRDATOS                                         
-      (                                                                 
-        CIF, NOMBRE, DIRECCION, TLF, CORREO                             
-      )                                                                 
-      VALUES                                                            
-      (                                                                 
-        '000000002', 'AMAZON', 'EN ALGUN LUGAR DE SEATTLE S/N'          
-        , '333555222', 'AMAZON@AMAZON.COM'                              
-      );                                                                
